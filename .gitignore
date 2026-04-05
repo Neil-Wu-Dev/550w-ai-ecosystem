@@ -1,0 +1,11 @@
+﻿.idea/
+__pycache__/
+*.pyc
+.env
+logs/
+venv/
+env/
+.pytest_cache/
+app/exports/
+*.safetensors
+*.bin
