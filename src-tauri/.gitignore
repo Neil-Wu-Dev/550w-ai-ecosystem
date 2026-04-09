@@ -1,0 +1,25 @@
+@'
+# --- Frontend (Node/Vite/Common) ---
+node_modules/
+dist/
+dist-tauri/
+.env*
+.DS_Store
+Thumbs.db
+*.log
+
+# --- Backend (Rust/Tauri Specific) ---
+# 必须使用完整的相对路径来锁定 target 文件夹
+src-tauri/target/
+src-tauri/gen/schemas/
+src-tauri/remote/
+
+# --- IDE/Editor ---
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+'@ | Out-File -Encoding utf8 .gitignore

@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* --- 1. 定义赛博朋克主题变量 (Tailwind v4) --- */
+@theme {
+  --color-cyber-black: #020a04;
+  --color-surface-dark: #0a160e;
+  --color-surface-light: #131e15;
+  --color-neon-green: #39ff14;
+  --color-cyber-green: #00ff41;
+}
+
+/* --- 2. 全局基础样式 --- */
+@layer base {
+  :root {
+    background-color: var(--color-cyber-black);
+    color: var(--color-cyber-green);
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    margin: 0;
+    padding: 0;
+    cursor: crosshair; /* 更有终端感 */
+  }
+  
+  body {
+    @apply bg-cyber-black m-0 p-0 overflow-hidden;
+  }
+
+  /* 霓虹文字闪烁感 */
+  .text-neon-green {
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+  }
+
+  /* 移除输入框原生焦点框 */
+  input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+/* --- 3. CRT 扫描线滤镜 (核心视觉) --- */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+              linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01));
+  z-index: 100;
+  background-size: 100% 3px, 3px 100%;
+  opacity: 0.3;
+}
+
+/* --- 4. 自定义滚动条 (隐形极简) --- */
+.custom-scrollbar::-webkit-scrollbar { 
+  width: 3px; 
+}
+.custom-scrollbar::-webkit-scrollbar-track { 
+  background: var(--color-cyber-black); 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb { 
+  background: rgba(57, 255, 20, 0.1); 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { 
+  background: var(--color-neon-green); 
+}
+
+/* --- 5. 核心动画：训练激活状态 --- */
+/* 这里使用了琥珀色/橙色，用来在全绿界面中突显“正在处理”的状态 */
+@keyframes pulse-training {
+  0% { 
+    border-color: rgba(245, 158, 11, 0.2); 
+    background-color: rgba(245, 158, 11, 0.05);
+  }
+  50% { 
+    border-color: rgba(245, 158, 11, 1); 
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+  100% { 
+    border-color: rgba(245, 158, 11, 0.2); 
+    background-color: rgba(245, 158, 11, 0.05);
+  }
+}
+
+.training-active { 
+  animation: pulse-training 1.5s infinite ease-in-out; 
+  /* 分开写，把 !important 放在最后 */
+  color: #f59e0b !important; 
+  border-color: #d97706 !important;
+}
+/* --- 6. 辅助工具类 --- */
+.bg-surface-dark {
+  background-color: var(--color-surface-dark);
+}
+
+.bg-surface-light {
+  background-color: var(--color-surface-light);
+}
+
+/* 简单的文字打字机装饰效果（可选） */
+.glitch-text {
+  position: relative;
+}
+
+/* 确保所有面板的边框都保持一致的透明度 */
+section, aside, header, footer {
+  border-color: rgba(0, 255, 65, 0.15);
+}
