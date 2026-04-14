@@ -5,25 +5,30 @@ from app.models.adapter_asset import AdapterAsset
 class IInferenceService(ABC):
     @abstractmethod
     def run_engine(self, model_path: str) -> bool:
-        """启动推理引擎，将底座模型加载至显存"""
+        """加载底座模型至显存"""
         pass
 
     @abstractmethod
     def stop_engine(self) -> None:
-        """停止推理引擎，彻底释放显存资源"""
+        """停止引擎并释放显存"""
+        pass
+
+    @abstractmethod
+    def mount_adapter(self, adapter_path: str, slot_id: str) -> AdapterAsset:
+        """【新增】将指定路径的适配器挂载到逻辑槽位，并执行架构兼容性检查"""
         pass
 
     @abstractmethod
     def generate_single_path(
         self,
         prompt: str,
-        adapter: Optional[AdapterAsset],
+        slot_id: str, # 【修改】通过 slot_id 调用，而非直接传对象
         max_tokens: int
     ) -> Generator[str, None, None]:
-        """执行单路推理任务（由显存锁保护，支持 AdapterAsset 实体）"""
+        """执行单路推理"""
         pass
 
     @abstractmethod
     def get_engine_status(self) -> Dict[str, Any]:
-        """获取当前引擎运行状态及挂载的适配器元数据"""
+        """获取引擎状态"""
         pass

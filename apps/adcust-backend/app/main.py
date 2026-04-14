@@ -1,8 +1,9 @@
 import logging
 import uvicorn
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware  # 必须增加跨域支持
-from app.api.v1.endpoints import workflow
+from fastapi.middleware.cors import CORSMiddleware
+# 导入拆分后的新路由
+from app.api.v1.endpoints import model_api, dataset_api, training_api, inference_api
 from app.core.dependencies import setup_dependencies
 
 logging.basicConfig(
@@ -18,22 +19,21 @@ def create_app() -> FastAPI:
         version="1.0.0"
     )
 
-    # --- 重要：增加跨域中间件，防止前端请求被拦截 ---
+    # 跨域支持
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # 允许所有来源，生产环境建议改为具体前端地址
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-    # --- 1. 挂载路由 ---
-    # 注意：这里的 prefix 决定了你所有接口的开头
-    app.include_router(
-        workflow.router,
-        prefix="/api/v1/workflow",
-        tags=["AdCust-Workflow"]
-    )
+    # --- 1. 挂载拆分后的资源路由 ---
+    # 路径由 main.py 统一分配，确保不重复
+    app.include_router(model_api.router, prefix="/api/v1/model", tags=["Model"])
+    app.include_router(dataset_api.router, prefix="/api/v1/dataset", tags=["Dataset"])
+    app.include_router(training_api.router, prefix="/api/v1/training", tags=["Training"])
+    app.include_router(inference_api.router, prefix="/api/v1/inference", tags=["Inference"])
 
     # --- 2. 依赖注入点火 ---
     try:
@@ -52,7 +52,7 @@ def read_root():
     return {
         "message": "AdCust Engine Online",
         "status": "ready",
-        "docs_url": "/docs" # 提示你去哪里看接口
+        "docs_url": "/docs"
     }
 
 if __name__ == "__main__":

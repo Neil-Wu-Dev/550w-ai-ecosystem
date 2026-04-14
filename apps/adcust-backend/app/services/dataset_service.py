@@ -1,3 +1,4 @@
+from typing import Optional
 from app.services.interfaces.i_dataset_service import IDatasetService
 from app.models.dataset_asset import DatasetAsset
 from app.core.constants import ChunkConfig, TrainingStrategy
@@ -7,48 +8,55 @@ from app.core.data_engines.knowledge_engines import KnowledgeInjectionTemplate, 
 
 class DatasetService(IDatasetService):
     def __init__(self):
-        # 组装底层引擎工具
         self._parser = PdfParser()
         self._splitter = SimpleTextSplitter()
+        # 【状态下沉】管理当前加载的数据集资产
+        self._active_dataset: Optional[DatasetAsset] = None
 
-        # 策略分发字典：支持未来横向扩展更多策略
         self._templates = {
             TrainingStrategy.KNOWLEDGE_INJECTION: KnowledgeInjectionTemplate(),
             TrainingStrategy.SMOKE_TEST: SmokeTestTemplate()
         }
 
-    def prepare_dataset_asset(
-            self,
-            file_path: str,
-            chunk_size: int,
-            strategy: str
-    ) -> DatasetAsset:
+    def prepare_dataset_asset(self, file_path: str, chunk_size: int, strategy: str) -> DatasetAsset:
+        """
+        功能：处理文件并生成数据集，同时负责旧资源的自动清理
+        参数：file_path (str)-文件路径, chunk_size (int)-切片大小, strategy (str)-策略名
+        返回：DatasetAsset 对象
+        """
+        # 【逻辑下沉】如果当前已有数据集，在加载新数据前自动执行销毁释放 RAM
+        if self._active_dataset:
+            self.release_dataset()
 
-        # 1. 拦截风险：校验分块长度上限
         actual_size = min(chunk_size, ChunkConfig.HARD_LIMIT)
-
-        # 2. 调用 Parser 引擎提取文本
         raw_text = self._parser.extract_text(file_path)
-
-        # 3. 调用 Splitter 引擎执行 Chunk 处理
         text_chunks = self._splitter.split(raw_text, actual_size)
 
-        # 4. 根据 Strategy 路由到对应的 Template 引擎进行自动化组织语言
         template_worker = self._templates.get(strategy)
         if not template_worker:
-            raise NotImplementedError(f"策略 {strategy} 对应的模板引擎尚未注册。")
+            raise NotImplementedError(f"策略 {strategy} 尚未注册。")
 
         formatted_chunks = template_worker.wrap(text_chunks)
 
-        # 5. 生成标准 DatasetAsset 对象
-        return DatasetAsset(
+        asset = DatasetAsset(
             source_name=file_path.split("/")[-1],
             strategy=strategy,
             chunks=formatted_chunks,
             chunk_size=actual_size
         )
 
-    def release_dataset(self, asset: DatasetAsset):
-        """执行销毁逻辑，释放 RAM 占用"""
-        if asset:
-            asset.destroy()
+        # 记录到当前状态
+        self._active_dataset = asset
+        return asset
+
+    def get_active_dataset(self) -> Optional[DatasetAsset]:
+        """获取当前就绪的数据集资产"""
+        return self._active_dataset
+
+    def release_dataset(self):
+        """
+        功能：显式销毁当前数据集并清空引用，释放内存
+        """
+        if self._active_dataset:
+            self._active_dataset.destroy()
+            self._active_dataset = None

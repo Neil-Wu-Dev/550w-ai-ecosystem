@@ -1,65 +1,78 @@
 import os
 import json
+from threading import Lock
 from app.models.model_asset import ModelAsset
 from app.services.interfaces.i_model_manager import IModelManagerService
-# 引入我们刚才定义的字典
 from app.core.constants import MODEL_LAYER_MAP
 from app.models.adapter_asset import AdapterAsset
+from typing import Optional
+
 
 class ModelManagerService(IModelManagerService):
-    def select_model_by_path(self, local_path: str) -> ModelAsset:
-        # 1. 物理检查：确保路径存在且是一个目录
-        if not os.path.isdir(local_path):
-            raise ValueError(f"Path not found or is not a directory: {local_path}")
+    def __init__(self):
+        # 【状态下沉】在服务内部维护当前激活的模型实体，实现单例状态化
+        self._current_model: Optional[ModelAsset] = None
+        self._lock = Lock()
 
-        # 2. 识别 config.json
+    def select_model_by_path(self, local_path: str) -> ModelAsset:
+        """
+        功能：解析物理路径并将其设为系统当前操作的底座模型
+        参数：local_path (str) - 模型文件夹的绝对路径
+        返回：ModelAsset - 实例化的模型资产对象
+        """
+        if not os.path.isdir(local_path):
+            raise ValueError(f"路径不存在: {local_path}")
+
         config_path = os.path.join(local_path, "config.json")
         if not os.path.exists(config_path):
-            raise ValueError(f"Not a valid model directory: config.json missing at {local_path}")
+            raise ValueError(f"无效的模型目录，缺少 config.json")
 
-        try:
-            with open(config_path, 'r', encoding='utf-8') as f:
-                config_data = json.load(f)
-        except json.JSONDecodeError:
-            raise ValueError(f"config.json is corrupted: {config_path}")
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config_data = json.load(f)
 
-        # 3. 提取核心元数据
-        # 模型架构 (例如: "llama")
         arch = config_data.get("model_type", "unknown").lower()
-
-        # 提取精度 (处理 torch_dtype 字段，如 "float16")
         prec_raw = config_data.get("torch_dtype", "fp32")
-        # 简单清洗：把 "torch.float16" 变成 "float16"
         precision = str(prec_raw).split('.')[-1]
-
-        # 4. 【核心逻辑】根据 Constants 里的字典进行匹配
-        # 如果模型架构在字典里，就拿走它所有的黄金层级名；
-        # 如果不在字典里，返回空列表，由前端提醒用户手动输入或不支持
         layers = MODEL_LAYER_MAP.get(arch, [])
 
-        # 5. 实例化并返回对象
-        # 使用 os.path.normpath 确保不同系统的路径分隔符一致
-        return ModelAsset(
+        # 实例化对象
+        asset = ModelAsset(
             name=os.path.basename(os.path.normpath(local_path)),
-            local_path=os.path.abspath(local_path),  # 存绝对路径最稳
+            local_path=os.path.abspath(local_path),
             architecture=arch,
             precision=precision,
             trainable_layers=layers
         )
 
+        # 【逻辑归位】直接在内部更新当前激活的模型状态，不再依赖外部 Orchestrator 记录
+        with self._lock:
+            self._current_model = asset
+
+        return asset
+
+    def get_active_model(self) -> Optional[ModelAsset]:
+        """
+        功能：供其他 Service（如 Training/Inference）调用的接口，获取当前激活的模型
+        返回：ModelAsset 或 None
+        """
+        return self._current_model
+
     def get_adapter_asset(self, adapter_path: str) -> AdapterAsset:
-        """实现具体的适配器元数据解析"""
+        """
+        功能：解析适配器（Adapter）的元数据
+        参数：adapter_path (str) - 适配器文件夹路径
+        返回：AdapterAsset 对象
+        """
         if not os.path.isdir(adapter_path):
             raise ValueError(f"适配器路径无效: {adapter_path}")
 
         config_path = os.path.join(adapter_path, "adapter_config.json")
         if not os.path.exists(config_path):
-            raise ValueError(f"不是合法的适配器目录: 缺少 adapter_config.json")
+            raise ValueError(f"缺少 adapter_config.json")
 
         with open(config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
 
-        # 假设 AdapterAsset 接收这些参数，请根据你的 AdapterAsset 定义调整
         return AdapterAsset(
             name=os.path.basename(os.path.normpath(adapter_path)),
             local_path=os.path.abspath(adapter_path),
