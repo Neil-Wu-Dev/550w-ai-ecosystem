@@ -1,13 +1,13 @@
 import logging
 import json
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 
-from app.services.interfaces.i_training_service import ITrainingService
-from app.core.dependencies import get_training_service
-from app.core.constants import TrainingMode
+from domain_logic.interfaces.services.i_training_service import ITrainingService
+from app.config.dependencies import get_training_service
+from domain_logic.defs import TrainingMode
 
 # 修改：清空 prefix
 router = APIRouter(prefix="", tags=["Training"])

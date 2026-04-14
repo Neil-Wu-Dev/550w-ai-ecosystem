@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 # 导入拆分后的新路由
 from app.api.v1.endpoints import model_api, dataset_api, training_api, inference_api
-from app.core.dependencies import setup_dependencies
+from app.config.dependencies import setup_dependencies
 
 logging.basicConfig(
     level=logging.INFO,

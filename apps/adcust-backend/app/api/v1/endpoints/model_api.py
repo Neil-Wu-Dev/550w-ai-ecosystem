@@ -1,9 +1,9 @@
 import logging
 from fastapi import APIRouter, Depends, HTTPException
-from app.services.interfaces.i_model_manager import IModelManagerService
-from app.core.dependencies import get_model_service
-from app.schemas.model_schema import ModelSelectRequest, ModelResponse
-from app.mappers.model_mapper import ModelMapper
+from domain_logic.interfaces.services.i_model_manager import IModelManagerService
+from app.config.dependencies import get_model_service
+from domain_logic.schemas.model_schema import ModelSelectRequest, ModelResponse
+from domain_logic.mappers.model_mapper import ModelMapper
 
 # 修改：清空 prefix，由 main 统一分发
 router = APIRouter(prefix="", tags=["Model"])

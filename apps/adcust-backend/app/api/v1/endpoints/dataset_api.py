@@ -1,7 +1,7 @@
 import logging
 from fastapi import APIRouter, Depends, HTTPException, Query
-from app.services.interfaces.i_dataset_service import IDatasetService
-from app.core.dependencies import get_dataset_service
+from domain_logic.interfaces.services.i_dataset_service import IDatasetService
+from app.config.dependencies import get_dataset_service
 
 # 修改：清空 prefix
 router = APIRouter(prefix="", tags=["Dataset"])

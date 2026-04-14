@@ -5,10 +5,10 @@ from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 
-from app.services.interfaces.i_inference_service import IInferenceService
-from app.core.dependencies import get_inference_service
-from app.core.constants import InferenceDispatchStrategy
-from app.mappers.adapter_mapper import AdapterMapper
+from domain_logic.interfaces.services.i_inference_service import IInferenceService
+from app.config.dependencies import get_inference_service
+from domain_logic.defs import InferenceDispatchStrategy
+from domain_logic.mappers.adapter_mapper import AdapterMapper
 
 # 修改：清空 prefix
 router = APIRouter(prefix="", tags=["Inference"])
