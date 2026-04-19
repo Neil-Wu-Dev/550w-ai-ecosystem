@@ -1,0 +1,5 @@
+{
+  "VALIDATION_NAME_TOO_LONG": "错误：名称 '{name}' 长度超过了 {max} 个字符的限制。",
+  "BUSINESS_USER_INACTIVE": "业务异常：用户 {user_id} 处于非激活状态，无法进行此操作。",
+  "INTERNAL_SERVER_ERROR": "系统内部错误，请联系技术团队。"
+}

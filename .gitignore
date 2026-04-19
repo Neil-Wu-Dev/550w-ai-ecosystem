@@ -1,0 +1,57 @@
+﻿# =================================================
+# 550W 项目全局屏蔽名单：除了代码，什么都别想进来
+# =================================================
+
+# 1. 屏蔽所有虚拟环境（不管是 venv 还是 Conda）
+**/venv/
+**/.venv/
+**/env/
+**/ENV/
+**/conda/
+bin/
+lib/
+include/
+share/
+
+# 2. 屏蔽 Python 运行产生的垃圾缓存
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+.mypy_cache/
+
+# 3. 屏蔽 12GB 物理数据/大文件（锁定你的 datasets 和 models 目录）
+**/datasets/
+**/models/
+**/checkpoints/
+*.bin
+*.pt
+*.pth
+*.zip
+*.tar.gz
+*.7z
+*.onnx
+
+# 4. 屏蔽 IDE 和系统产生的配置文件
+.idea/
+.vscode/
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
+
+# 5. 屏蔽前端/构建产生的冗余
+node_modules/
+dist/
+build/
+out/
+
+
+
+
+# 6. 屏蔽打包与分发的元数据
+*.egg-info/
+.installed.cfg
+*.egg

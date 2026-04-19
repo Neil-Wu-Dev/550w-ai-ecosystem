@@ -6,6 +6,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.endpoints import model_api, dataset_api, training_api, inference_api
 from app.config.dependencies import setup_dependencies
 
+# 1. 导入你定义的领域异常基类
+from adcust_logic.exceptions.domain_exception import DomainException
+# 2. 导入你刚才在 v1 写的拦截守卫
+from app.api.v1.exception_handlers import domain_exception_handler
+
+
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -27,6 +35,12 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # --- 【0.关键点火：在这里挂载！】 ---
+    # 必须在 include_router 之前，确保它是全局生效的“防御网”
+    app.add_exception_handler(DomainException, domain_exception_handler)
+
+
 
     # --- 1. 挂载拆分后的资源路由 ---
     # 路径由 main.py 统一分配，确保不重复

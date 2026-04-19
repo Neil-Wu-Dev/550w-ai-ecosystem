@@ -2,16 +2,16 @@ import logging
 from fastapi import FastAPI
 
 # --- 1. 导入接口 ---
-from domain_logic.interfaces.services.i_model_manager import IModelManagerService
-from domain_logic.interfaces.services.i_dataset_service import IDatasetService
-from domain_logic.interfaces.services.i_training_service import ITrainingService
-from domain_logic.interfaces.services.i_inference_service import IInferenceService
+from adcust_logic.interfaces.services.i_model_manager import IModelManagerService
+from adcust_logic.interfaces.services.i_dataset_service import IDatasetService
+from adcust_logic.interfaces.services.i_training_service import ITrainingService
+from adcust_logic.interfaces.services.i_inference_service import IInferenceService
 
 # --- 2. 导入具体的实现类 ---
-from domain_logic.services.model_manager_service import ModelManagerService
-from domain_logic.services.dataset_service import DatasetService
-from domain_logic.services.training_service import TrainingService
-from domain_logic.services.inference_service import InferenceService
+from adcust_logic.services.model_manager_service import ModelManagerService
+from adcust_logic.services.dataset_service import DatasetService
+from adcust_logic.services.training_service import TrainingService
+from adcust_logic.services.inference_service import InferenceService
 
 logger = logging.getLogger(__name__)
 
