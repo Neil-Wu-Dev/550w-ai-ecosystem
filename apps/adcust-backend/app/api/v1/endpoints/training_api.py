@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 
-from adcust_logic.interfaces.services.i_training_service import ITrainingService
+from adcust_logic.interfaces.services.remote.i_training_service import ITrainingService
 from app.config.dependencies import get_training_service
 from adcust_logic.defs import TrainingMode
 

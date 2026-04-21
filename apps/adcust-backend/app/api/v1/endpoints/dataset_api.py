@@ -1,6 +1,6 @@
 import logging
 from fastapi import APIRouter, Depends, Query
-from adcust_logic.interfaces.services.i_dataset_service import IDatasetService
+from adcust_logic.interfaces.services.client.i_dataset_service import IDatasetService
 from app.config.dependencies import get_dataset_service
 
 # 修改：清空 prefix

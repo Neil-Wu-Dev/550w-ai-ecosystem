@@ -1,9 +1,9 @@
 from typing import Optional
-from adcust_logic.interfaces.services.i_dataset_service import IDatasetService
+from adcust_logic.interfaces.services.client.i_dataset_service import IDatasetService
 from adcust_logic.models.dataset_asset import DatasetAsset
 from adcust_logic.defs import ChunkConfig, TrainingStrategy
-from adcust_logic.services.engines.data_engines.pdf_engines import PdfParser, SimpleTextSplitter
-from adcust_logic.services.engines.data_engines.knowledge_engines import KnowledgeInjectionTemplate, SmokeTestTemplate
+from adcust_logic.services.engines.client.data_engines.pdf_engines import PdfParser, SimpleTextSplitter
+from adcust_logic.services.engines.client.data_engines.knowledge_engines import KnowledgeInjectionTemplate, SmokeTestTemplate
 
 
 class DatasetService(IDatasetService):

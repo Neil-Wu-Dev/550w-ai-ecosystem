@@ -2,7 +2,7 @@ import os
 import json
 from threading import Lock
 from adcust_logic.models.model_asset import ModelAsset
-from adcust_logic.interfaces.services.i_model_manager import IModelManagerService
+from adcust_logic.interfaces.services.client.i_model_manager import IModelManagerService
 from adcust_logic.defs import MODEL_LAYER_MAP
 from adcust_logic.models.adapter_asset import AdapterAsset
 from typing import Optional

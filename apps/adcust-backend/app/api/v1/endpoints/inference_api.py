@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 
-from adcust_logic.interfaces.services.i_inference_service import IInferenceService
+from adcust_logic.interfaces.services.client.i_inference_service import IInferenceService
 from app.config.dependencies import get_inference_service
 from adcust_logic.defs import InferenceDispatchStrategy
 from adcust_logic.mappers.adapter_mapper import AdapterMapper

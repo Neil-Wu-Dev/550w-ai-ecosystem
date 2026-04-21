@@ -1,8 +1,8 @@
 from threading import Lock
 from typing import Generator, Dict, Any
-from adcust_logic.interfaces.services.i_inference_service import IInferenceService
-from adcust_logic.interfaces.services.i_model_manager import IModelManagerService
-from adcust_logic.services.engines.inference_engines.huggingface_engine import HuggingfaceEngine
+from adcust_logic.interfaces.services.client.i_inference_service import IInferenceService
+from adcust_logic.interfaces.services.client.i_model_manager import IModelManagerService
+from adcust_logic.services.engines.client.inference_engines.huggingface_engine import HuggingfaceEngine
 from adcust_logic.models.adapter_asset import AdapterAsset
 
 
