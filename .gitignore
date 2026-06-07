@@ -22,11 +22,18 @@ share/
 .coverage
 .mypy_cache/
 
-# 3. 屏蔽 12GB 物理数据/大文件（锁定你的 datasets 和 models 目录）
+# 3. 屏蔽物理数据和模型资产。
+# 不允许使用 **/models/：adcust_logic/models 是必须提交的 Python 领域模型源码。
 **/datasets/
-**/models/
 **/checkpoints/
+**/storage/adapters/
+**/storage/models/
+**/model-cache/
+**/model_cache/
+# 所有 data 目录都是本地持久化或运行时数据，不允许提交到 Git。
+**/data/
 *.bin
+*.safetensors
 *.pt
 *.pth
 *.zip

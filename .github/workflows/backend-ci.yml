@@ -99,8 +99,8 @@ jobs:
 
       - name: Verify installed package
         run: >-
-          python -c
-          "import adcust_logic, importlib.resources;
+          python -c "import adcust_logic, adcust_logic.models,
+          adcust_logic.models.infra.compute_provider_asset, importlib.resources;
           assert importlib.resources.files('adcust_logic').joinpath('remote/train_entry.py').is_file();
           print('Installed adcust_logic package: PASS')"
 
@@ -138,6 +138,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r apps/adcust-backend/requirements-ci.txt
           python -m pip install dist/*.whl
+
+      - name: Verify installed package
+        run: >-
+          python -c "import adcust_logic, adcust_logic.models,
+          adcust_logic.models.infra.compute_provider_asset, importlib.resources;
+          assert importlib.resources.files('adcust_logic').joinpath('remote/train_entry.py').is_file();
+          print('Installed adcust_logic package: PASS')"
 
       - name: Run integration tests
         working-directory: apps/adcust-backend

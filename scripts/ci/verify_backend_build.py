@@ -10,6 +10,13 @@ from pathlib import Path
 
 REQUIRED_WHEEL_FILES = {
     "adcust_logic/__init__.py",
+    "adcust_logic/models/__init__.py",
+    "adcust_logic/models/adapter_asset.py",
+    "adcust_logic/models/dataset_asset.py",
+    "adcust_logic/models/model_asset.py",
+    "adcust_logic/models/remote_training_job.py",
+    "adcust_logic/models/infra/__init__.py",
+    "adcust_logic/models/infra/compute_provider_asset.py",
     "adcust_logic/locales/en_US.json",
     "adcust_logic/locales/zh_CN.json",
     "adcust_logic/remote/train_entry.py",
