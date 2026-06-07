@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
+import os
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +17,7 @@ from app.config.dependencies import setup_dependencies
 
 # 1. 导入领域异常基类与拦截守卫
 from adcust_logic.exceptions.domain_exception import DomainException
-from app.api.v1.exception_handlers import domain_exception_handler
+from app.api.v1.exception_handlers import domain_exception_handler, unhandled_exception_handler
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,6 +43,7 @@ def create_app() -> FastAPI:
 
     # --- 【关键防御网：挂载异常拦截器】 ---
     app.add_exception_handler(DomainException, domain_exception_handler)
+    app.add_exception_handler(Exception, unhandled_exception_handler)
 
     # --- 1. 挂载资源路由 (严格按模块分发) ---
     app.include_router(model_api.router, prefix="/api/v1/model", tags=["Model"])
@@ -72,11 +74,24 @@ def read_root():
         "docs_url": "/docs"
     }
 
+@app.get("/health", tags=["Root"])
+@app.get("/api/v1/health", tags=["Root"])
+def read_health():
+    """桌面端健康检查入口，兼容 root base URL 和 /api/v1 base URL 两种配置。"""
+    return {
+        "service": "adcust-backend",
+        "status": "ready",
+        "version": "1.1.0"
+    }
+
 if __name__ == "__main__":
-    logger.info("Starting AdCust Uvicorn Server on http://127.0.0.1:8000")
+    host = os.getenv("ADCUST_BACKEND_HOST", "127.0.0.1")
+    port = int(os.getenv("ADCUST_BACKEND_PORT", "8000"))
+    logger.info(f"Starting AdCust Uvicorn Server on http://{host}:{port}")
     uvicorn.run(
         "main:app",
-        host="127.0.0.1",
-        port=8000,
-        reload=True
+        host=host,
+        port=port,
+        # 桌面后端必须保持训练服务和任务状态稳定，不能由文件监视器中途重建进程。
+        reload=False
     )
