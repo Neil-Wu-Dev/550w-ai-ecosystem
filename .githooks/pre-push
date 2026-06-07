@@ -1,0 +1,15 @@
+#!/bin/sh
+# 推送前复检即将进入远端的提交，防止使用 --no-verify 跳过提交钩子后误推大文件。
+
+repo_root="$(git rev-parse --show-toplevel)" || exit 1
+
+if command -v python >/dev/null 2>&1; then
+    exec python "$repo_root/scripts/git_size_guard.py" push "$1"
+fi
+
+if command -v python3 >/dev/null 2>&1; then
+    exec python3 "$repo_root/scripts/git_size_guard.py" push "$1"
+fi
+
+echo "[Git Size Guard] ERROR: Python 3 is required to validate the push." >&2
+exit 2

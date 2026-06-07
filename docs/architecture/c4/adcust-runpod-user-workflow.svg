@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1320" viewBox="0 0 1900 1320">
+  <defs>
+    <style>
+      .title { font: 700 36px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 400 16px Inter, Arial, sans-serif; fill: #94a3b8; }
+      .lane { font: 700 16px Inter, Arial, sans-serif; fill: #bfdbfe; }
+      .name { font: 700 17px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .type { font: 600 12px Inter, Arial, sans-serif; fill: #93c5fd; }
+      .body { font: 400 13px Inter, Arial, sans-serif; fill: #cbd5e1; }
+      .small { font: 600 12px Inter, Arial, sans-serif; fill: #dbeafe; }
+      .warning { font: 700 13px Inter, Arial, sans-serif; fill: #fecaca; }
+      .laneBox { fill: #101217; stroke: #3f3f46; stroke-width: 2; rx: 10; }
+      .runpod { fill: #3f1d2e; stroke: #fb7185; stroke-width: 2; rx: 8; }
+      .adcust { fill: #172554; stroke: #3b82f6; stroke-width: 2; rx: 8; }
+      .user { fill: #1e293b; stroke: #64748b; stroke-width: 2; rx: 8; }
+      .success { fill: #12372a; stroke: #34d399; stroke-width: 2; rx: 8; }
+      .decision { fill: #3f2b12; stroke: #fbbf24; stroke-width: 2; }
+      .arrow { fill: none; stroke: #60a5fa; stroke-width: 2.4; marker-end: url(#arrow); }
+      .branch { fill: none; stroke: #fbbf24; stroke-width: 2.4; marker-end: url(#arrowYellow); }
+      .danger { fill: none; stroke: #fb7185; stroke-width: 2.4; marker-end: url(#arrowRed); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrowYellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#fb7185"/>
+    </marker>
+  </defs>
+
+  <rect width="1900" height="1320" fill="#09090b"/>
+  <text x="55" y="62" class="title">AdCust + RunPod — User Workflow</text>
+  <text x="55" y="94" class="subtitle">From GPU provisioning and SSH registration to training, manual shutdown, reconnection, and template-based recovery</text>
+
+  <rect class="laneBox" x="45" y="135" width="1810" height="205"/>
+  <text x="70" y="170" class="lane">RUNPOD CONSOLE</text>
+
+  <rect class="laneBox" x="45" y="370" width="1810" height="530"/>
+  <text x="70" y="405" class="lane">ADCUST DESKTOP</text>
+
+  <rect class="laneBox" x="45" y="930" width="1810" height="325"/>
+  <text x="70" y="965" class="lane">NEXT SESSION / RECOVERY</text>
+
+  <!-- Initial RunPod steps -->
+  <rect class="runpod" x="90" y="205" width="250" height="100"/>
+  <text x="215" y="242" text-anchor="middle" class="name">1. Select a GPU</text>
+  <text x="215" y="269" text-anchor="middle" class="body">Choose an available RunPod GPU</text>
+
+  <rect class="runpod" x="410" y="205" width="250" height="100"/>
+  <text x="535" y="242" text-anchor="middle" class="name">2. Create and Start Pod</text>
+  <text x="535" y="269" text-anchor="middle" class="body">Run a Linux + NVIDIA GPU pod</text>
+
+  <rect class="runpod" x="730" y="205" width="280" height="100"/>
+  <text x="870" y="242" text-anchor="middle" class="name">3. Collect SSH Details</text>
+  <text x="870" y="269" text-anchor="middle" class="body">Host, Direct TCP port, user, key/password</text>
+
+  <path class="arrow" d="M340 255 H400"/>
+  <path class="arrow" d="M660 255 H720"/>
+
+  <!-- Initial AdCust steps -->
+  <rect class="adcust" x="90" y="450" width="250" height="115"/>
+  <text x="215" y="488" text-anchor="middle" class="name">4. Add Node</text>
+  <text x="215" y="515" text-anchor="middle" class="body">Register a new compute node</text>
+  <text x="215" y="538" text-anchor="middle" class="body">in the Compute page</text>
+
+  <rect class="adcust" x="410" y="450" width="250" height="115"/>
+  <text x="535" y="488" text-anchor="middle" class="name">5. Enter Connection Data</text>
+  <text x="535" y="515" text-anchor="middle" class="body">Save the current RunPod SSH</text>
+  <text x="535" y="538" text-anchor="middle" class="body">host, port, credentials, workspace</text>
+
+  <rect class="adcust" x="730" y="450" width="250" height="115"/>
+  <text x="855" y="488" text-anchor="middle" class="name">6. Try Connection</text>
+  <text x="855" y="515" text-anchor="middle" class="body">Verify that the running pod</text>
+  <text x="855" y="538" text-anchor="middle" class="body">is reachable through SSH</text>
+
+  <polygon class="decision" points="1115,435 1245,507 1115,579 985,507"/>
+  <text x="1115" y="500" text-anchor="middle" class="name">Connected?</text>
+  <text x="1115" y="525" text-anchor="middle" class="type">SSH HEARTBEAT</text>
+
+  <rect class="adcust" x="1335" y="450" width="250" height="115"/>
+  <text x="1460" y="488" text-anchor="middle" class="name">7. Run Training</text>
+  <text x="1460" y="515" text-anchor="middle" class="body">Prepare runtime, download model,</text>
+  <text x="1460" y="538" text-anchor="middle" class="body">train adapter, stream progress</text>
+
+  <rect class="success" x="1335" y="665" width="250" height="125"/>
+  <text x="1460" y="702" text-anchor="middle" class="name">8. Adapter Downloaded</text>
+  <text x="1460" y="729" text-anchor="middle" class="body">Signed adapter is saved</text>
+  <text x="1460" y="752" text-anchor="middle" class="body">to the selected local folder</text>
+
+  <rect class="runpod" x="1630" y="665" width="185" height="125"/>
+  <text x="1722" y="696" text-anchor="middle" class="name">9. Return to RunPod</text>
+  <text x="1722" y="721" text-anchor="middle" class="name">and Stop the Pod</text>
+  <text x="1722" y="746" text-anchor="middle" class="warning">Manual provider action</text>
+  <text x="1722" y="767" text-anchor="middle" class="body">SSH disconnect does not</text>
+  <text x="1722" y="785" text-anchor="middle" class="body">stop RunPod billing</text>
+
+  <path class="arrow" d="M870 305 V430 H215 V440"/>
+  <path class="arrow" d="M340 507 H400"/>
+  <path class="arrow" d="M660 507 H720"/>
+  <path class="arrow" d="M980 507 H975"/>
+  <path class="arrow" d="M1245 507 H1325"/>
+  <text x="1285" y="490" text-anchor="middle" class="small">YES</text>
+  <path class="arrow" d="M1460 565 V655"/>
+  <path class="danger" d="M1585 728 H1620"/>
+
+  <path class="danger" d="M1115 579 V835 H855 V575"/>
+  <text x="1005" y="820" text-anchor="middle" class="warning">NO — show the real SSH error, then correct the node data or start the pod</text>
+
+  <!-- Next session -->
+  <rect class="runpod" x="90" y="1010" width="250" height="110"/>
+  <text x="215" y="1048" text-anchor="middle" class="name">10. Start the Same Pod</text>
+  <text x="215" y="1075" text-anchor="middle" class="body">Return to RunPod and resume</text>
+  <text x="215" y="1098" text-anchor="middle" class="body">the previously stopped pod</text>
+
+  <polygon class="decision" points="500,990 640,1065 500,1140 360,1065"/>
+  <text x="500" y="1058" text-anchor="middle" class="name">GPU Available?</text>
+  <text x="500" y="1083" text-anchor="middle" class="type">RUNPOD CAPACITY</text>
+
+  <rect class="runpod" x="710" y="985" width="270" height="125"/>
+  <text x="845" y="1023" text-anchor="middle" class="name">Read New Direct TCP Port</text>
+  <text x="845" y="1050" text-anchor="middle" class="body">The restarted pod may expose</text>
+  <text x="845" y="1073" text-anchor="middle" class="body">a different SSH port</text>
+
+  <rect class="adcust" x="1050" y="985" width="270" height="125"/>
+  <text x="1185" y="1023" text-anchor="middle" class="name">Edit Existing Node</text>
+  <text x="1185" y="1050" text-anchor="middle" class="body">Update the saved Direct TCP port</text>
+  <text x="1185" y="1073" text-anchor="middle" class="body">and try the connection again</text>
+
+  <rect class="success" x="1390" y="985" width="250" height="125"/>
+  <text x="1515" y="1023" text-anchor="middle" class="name">Ready for New Training</text>
+  <text x="1515" y="1050" text-anchor="middle" class="body">Reuse the same node profile</text>
+  <text x="1515" y="1073" text-anchor="middle" class="body">with its updated connection data</text>
+
+  <rect class="runpod" x="675" y="1160" width="260" height="70"/>
+  <text x="805" y="1188" text-anchor="middle" class="name">Wait for GPU Capacity</text>
+  <text x="805" y="1212" text-anchor="middle" class="body">Retry starting the same pod later</text>
+
+  <rect class="runpod" x="1030" y="1160" width="300" height="70"/>
+  <text x="1180" y="1186" text-anchor="middle" class="name">Save Runtime as a Template</text>
+  <text x="1180" y="1210" text-anchor="middle" class="body">Create a replacement pod from the template</text>
+
+  <rect class="adcust" x="1425" y="1160" width="300" height="70"/>
+  <text x="1575" y="1188" text-anchor="middle" class="name">Add the New Pod as a New Node</text>
+  <text x="1575" y="1212" text-anchor="middle" class="body">Enter its new SSH details and connect</text>
+
+  <path class="arrow" d="M1722 800 V945 H215 V1000"/>
+  <path class="arrow" d="M340 1065 H350"/>
+  <path class="arrow" d="M640 1065 H700"/>
+  <text x="670" y="1048" text-anchor="middle" class="small">YES</text>
+  <path class="arrow" d="M980 1048 H1040"/>
+  <path class="arrow" d="M1320 1048 H1380"/>
+
+  <path class="branch" d="M500 1140 V1195 H665"/>
+  <text x="540" y="1178" class="small">NO — OPTION A</text>
+  <path class="branch" d="M500 1140 V1250 H1180 V1240"/>
+  <text x="735" y="1243" class="small">NO — OPTION B: preserve the runtime and create a replacement pod</text>
+  <path class="arrow" d="M1330 1195 H1415"/>
+
+  <text x="55" y="1290" class="subtitle">Operational rule: RunPod owns pod lifecycle and billing. AdCust owns SSH connectivity, training orchestration, monitoring, and adapter delivery.</text>
+</svg>

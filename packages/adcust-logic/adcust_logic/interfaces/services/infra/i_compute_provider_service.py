@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional
 from adcust_logic.models.infra.compute_provider_asset import ComputeProviderAsset
+from adcust_logic.interfaces.services.infra.i_compute_driver import IComputeDriver
 
 
 class IComputeProviderService(ABC):
@@ -92,4 +93,14 @@ class IComputeProviderService(ABC):
             provider_id: 待移除的 ID。
             cleanup_remote: 是否尝试清理远端残留的训练逻辑及临时文件，确保隐私。
         """
+        pass
+
+    @abstractmethod
+    def get_driver_for(self, provider: ComputeProviderAsset) -> IComputeDriver:
+        """为指定远程节点创建物理执行驱动。"""
+        pass
+
+    @abstractmethod
+    def mark_provider_disconnected(self, provider_id: str) -> ComputeProviderAsset:
+        """释放 AdCust 对节点的会话状态标记。"""
         pass

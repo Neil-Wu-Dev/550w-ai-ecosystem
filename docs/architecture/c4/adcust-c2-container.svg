@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1100" viewBox="0 0 1800 1100">
+  <defs>
+    <style>
+      .title { font: 700 34px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 400 16px Inter, Arial, sans-serif; fill: #94a3b8; }
+      .name { font: 700 19px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .type { font: 600 13px Inter, Arial, sans-serif; fill: #93c5fd; }
+      .body { font: 400 14px Inter, Arial, sans-serif; fill: #cbd5e1; }
+      .rel { font: 600 13px Inter, Arial, sans-serif; fill: #dbeafe; }
+      .boundary { fill: #0f1117; stroke: #3f3f46; stroke-width: 2; stroke-dasharray: 8 7; rx: 12; }
+      .box { stroke-width: 2; rx: 8; }
+      .arrow { fill: none; stroke: #60a5fa; stroke-width: 2.2; marker-end: url(#arrow); }
+      .storage { fill: none; stroke: #fbbf24; stroke-width: 2; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+
+  <rect width="1800" height="1100" fill="#09090b"/>
+  <text x="58" y="68" class="title">AdCust — C2 Container Diagram</text>
+  <text x="58" y="100" class="subtitle">Desktop, API, reusable package, local runtime, persistent data, and the remote RunPod training node</text>
+
+  <rect class="boundary" x="50" y="135" width="1170" height="900"/>
+  <text x="78" y="175" class="type">ADCUST LOCAL WORKSTATION</text>
+
+  <rect class="box" x="90" y="220" width="310" height="220" fill="#172554" stroke="#3b82f6"/>
+  <text x="245" y="272" text-anchor="middle" class="name">AdCust Desktop</text>
+  <text x="245" y="299" text-anchor="middle" class="type">[Tauri 2 + React 19 + TypeScript]</text>
+  <text x="245" y="340" text-anchor="middle" class="body">Compute registry, training workflow,</text>
+  <text x="245" y="364" text-anchor="middle" class="body">loss curve, logs, adapter controls,</text>
+  <text x="245" y="388" text-anchor="middle" class="body">chat history, and runtime status.</text>
+
+  <rect class="box" x="505" y="220" width="310" height="220" fill="#1e293b" stroke="#64748b"/>
+  <text x="660" y="272" text-anchor="middle" class="name">AdCust Backend API</text>
+  <text x="660" y="299" text-anchor="middle" class="type">[FastAPI + Uvicorn]</text>
+  <text x="660" y="340" text-anchor="middle" class="body">HTTP endpoints, request validation,</text>
+  <text x="660" y="364" text-anchor="middle" class="body">dependency injection, event streaming,</text>
+  <text x="660" y="388" text-anchor="middle" class="body">health checks, and error mapping.</text>
+
+  <rect class="box" x="905" y="220" width="270" height="220" fill="#312e81" stroke="#818cf8"/>
+  <text x="1040" y="272" text-anchor="middle" class="name">adcust_logic</text>
+  <text x="1040" y="299" text-anchor="middle" class="type">[Reusable Python Package]</text>
+  <text x="1040" y="340" text-anchor="middle" class="body">Rich domain models, DTO schemas,</text>
+  <text x="1040" y="364" text-anchor="middle" class="body">services, engines, repositories,</text>
+  <text x="1040" y="388" text-anchor="middle" class="body">drivers, mappers, and exceptions.</text>
+
+  <rect class="box" x="90" y="585" width="310" height="205" fill="#12372a" stroke="#34d399"/>
+  <text x="245" y="635" text-anchor="middle" class="name">Local Inference Runtime</text>
+  <text x="245" y="662" text-anchor="middle" class="type">[Transformers + PEFT + PyTorch]</text>
+  <text x="245" y="703" text-anchor="middle" class="body">Loads the selected local base model,</text>
+  <text x="245" y="727" text-anchor="middle" class="body">hot-mounts signed LoRA adapters,</text>
+  <text x="245" y="751" text-anchor="middle" class="body">generates contextual chat responses.</text>
+
+  <path class="storage" d="M525 585 H795 V790 H525 Z"/>
+  <path class="storage" d="M525 585 C525 565 795 565 795 585 C795 605 525 605 525 585"/>
+  <path class="storage" d="M525 790 C525 810 795 810 795 790"/>
+  <text x="660" y="650" text-anchor="middle" class="name">Local Persistent Data</text>
+  <text x="660" y="677" text-anchor="middle" class="type">[JSON + Local Filesystem]</text>
+  <text x="660" y="718" text-anchor="middle" class="body">Compute profiles, training defaults,</text>
+  <text x="660" y="742" text-anchor="middle" class="body">local models, downloaded adapters,</text>
+  <text x="660" y="766" text-anchor="middle" class="body">and adapter signatures.</text>
+
+  <rect class="box" x="905" y="585" width="270" height="205" fill="#3f2b12" stroke="#fbbf24"/>
+  <text x="1040" y="635" text-anchor="middle" class="name">Dataset Workspace</text>
+  <text x="1040" y="662" text-anchor="middle" class="type">[PDF / JSON + Temporary JSON]</text>
+  <text x="1040" y="703" text-anchor="middle" class="body">Extracts PDF text, creates clean</text>
+  <text x="1040" y="727" text-anchor="middle" class="body">temporary training data, uploads it,</text>
+  <text x="1040" y="751" text-anchor="middle" class="body">then removes local temporary files.</text>
+
+  <rect class="box" x="1320" y="220" width="410" height="570" fill="#26151d" stroke="#fb7185"/>
+  <text x="1525" y="270" text-anchor="middle" class="name">RunPod GPU Server</text>
+  <text x="1525" y="298" text-anchor="middle" class="type">[User-Managed Linux + NVIDIA GPU]</text>
+
+  <rect class="box" x="1360" y="340" width="330" height="115" fill="#3f1d2e" stroke="#fb7185"/>
+  <text x="1525" y="380" text-anchor="middle" class="name">SSH / SFTP Endpoint</text>
+  <text x="1525" y="408" text-anchor="middle" class="body">Receives commands and job assets</text>
+  <text x="1525" y="431" text-anchor="middle" class="body">and streams stdout / stderr logs</text>
+
+  <rect class="box" x="1360" y="490" width="330" height="115" fill="#3f1d2e" stroke="#fb7185"/>
+  <text x="1525" y="530" text-anchor="middle" class="name">Isolated Training Runtime</text>
+  <text x="1525" y="558" text-anchor="middle" class="body">Python venv, Torch, Transformers,</text>
+  <text x="1525" y="581" text-anchor="middle" class="body">PEFT, Accelerate, Datasets, CUDA</text>
+
+  <rect class="box" x="1360" y="640" width="330" height="115" fill="#3f1d2e" stroke="#fb7185"/>
+  <text x="1525" y="680" text-anchor="middle" class="name">Remote Training Job</text>
+  <text x="1525" y="708" text-anchor="middle" class="body">Exact base model revision, dataset,</text>
+  <text x="1525" y="731" text-anchor="middle" class="body">LoRA / QLoRA training and artifacts</text>
+
+  <rect class="box" x="1320" y="865" width="410" height="135" fill="#12372a" stroke="#34d399"/>
+  <text x="1525" y="910" text-anchor="middle" class="name">Hugging Face Hub</text>
+  <text x="1525" y="937" text-anchor="middle" class="type">[External Model Registry]</text>
+  <text x="1525" y="970" text-anchor="middle" class="body">Downloads the bound repository revision to RunPod</text>
+
+  <path class="arrow" d="M400 330 H495"/>
+  <text x="448" y="310" text-anchor="middle" class="rel">HTTP / JSON</text>
+
+  <path class="arrow" d="M815 330 H895"/>
+  <text x="855" y="310" text-anchor="middle" class="rel">Python calls</text>
+
+  <path class="arrow" d="M1040 450 V575"/>
+  <text x="1055" y="520" class="rel">Processes datasets</text>
+
+  <path class="arrow" d="M515 690 H410"/>
+  <text x="462" y="675" text-anchor="middle" class="rel">Models and adapters</text>
+
+  <path class="arrow" d="M660 450 V555"/>
+  <text x="675" y="515" class="rel">Reads / writes</text>
+
+  <path class="arrow" d="M1175 330 C1250 330 1260 397 1350 397"/>
+  <text x="1260" y="365" text-anchor="middle" class="rel">SSH / SFTP</text>
+
+  <path class="arrow" d="M1350 700 C1260 700 1250 405 1175 405"/>
+  <text x="1255" y="626" text-anchor="middle" class="rel">Logs, metrics, adapters</text>
+
+  <path class="arrow" d="M1525 855 V765"/>
+  <text x="1540" y="820" class="rel">HTTPS snapshot download</text>
+
+  <text x="72" y="1000" class="subtitle">The user starts and stops the RunPod pod in the RunPod console. Closing SSH does not stop billing.</text>
+</svg>

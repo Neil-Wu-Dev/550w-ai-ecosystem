@@ -12,9 +12,12 @@
   "app": {
     "windows": [
       {
-        "title": "adcust-desktop",
-        "width": 800,
-        "height": 600
+        "title": "AdCust",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 1100,
+        "minHeight": 720,
+        "decorations": false
       }
     ],
     "security": {

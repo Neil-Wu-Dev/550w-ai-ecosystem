@@ -25,3 +25,7 @@ class IComputeDriver(ABC):
     def pull_file(self, remote_path: str, local_path: str):
         """物理下载（对应第 6 步结果回收）"""
         pass
+
+    def disconnect(self):
+        """释放底层连接资源"""
+        pass

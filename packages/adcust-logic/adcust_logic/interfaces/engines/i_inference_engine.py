@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Generator, Optional
+from typing import Generator, Optional, List, Dict
 from adcust_logic.models.adapter_asset import AdapterAsset
 
 class IInferenceEngine(ABC):
@@ -22,7 +22,9 @@ class IInferenceEngine(ABC):
     def generate_stream(
         self,
         prompt: str,
-        max_new_tokens: int = 512
+        max_new_tokens: int = 512,
+        system_prompt: Optional[str] = None,
+        history: Optional[List[Dict[str, str]]] = None
     ) -> Generator[str, None, None]:
         """流式生成文本块"""
         pass

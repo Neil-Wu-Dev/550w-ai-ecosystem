@@ -16,6 +16,9 @@ class ComputeProviderResponse(BaseModel):
     name: str
     provider_type: str
     endpoint_summary: str
+    connection_info: Dict[str, Any]
+    remote_workspace_path: str
+    hourly_rate_usd: float
     is_active: bool
     last_heartbeat: Optional[datetime] = None
     telemetry_data: Dict[str, Any]

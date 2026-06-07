@@ -5,6 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "adcust_logic"
 version = "0.1.0"
+description = "AdCust 的可复用领域逻辑、远程训练编排与本地推理 package"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "PyMuPDF>=1.24.0",
+]
 
-[tool.setuptools]
-packages = ["adcust_logic"]
+[tool.setuptools.packages.find]
+include = ["adcust_logic*"]
+
+[tool.setuptools.package-data]
+adcust_logic = ["locales/*.json", "remote/*.py"]

@@ -18,6 +18,7 @@ class AdapterMapper:
 
         return {
             "name": entity.name,
+            "path": entity.local_path,
             "strategy": entity.strategy,
             "base_model": entity.base_model_name,  # 映射对齐
             "config": entity.config_params,

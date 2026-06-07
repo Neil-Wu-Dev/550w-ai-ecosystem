@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1200" viewBox="0 0 1900 1200">
+  <defs>
+    <style>
+      .title { font: 700 34px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 400 16px Inter, Arial, sans-serif; fill: #94a3b8; }
+      .name { font: 700 17px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .type { font: 600 12px Inter, Arial, sans-serif; fill: #93c5fd; }
+      .body { font: 400 13px Inter, Arial, sans-serif; fill: #cbd5e1; }
+      .rel { font: 600 12px Inter, Arial, sans-serif; fill: #dbeafe; }
+      .boundary { fill: #0f1117; stroke: #3f3f46; stroke-width: 2; stroke-dasharray: 8 7; rx: 12; }
+      .box { stroke-width: 2; rx: 7; }
+      .arrow { fill: none; stroke: #60a5fa; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa"/>
+    </marker>
+  </defs>
+
+  <rect width="1900" height="1200" fill="#09090b"/>
+  <text x="55" y="65" class="title">AdCust — C3 Component Diagram</text>
+  <text x="55" y="98" class="subtitle">Backend API and adcust_logic components responsible for compute, datasets, training, artifacts, and inference</text>
+
+  <rect class="boundary" x="45" y="135" width="1810" height="1005"/>
+  <text x="72" y="175" class="type">AD CUST BACKEND + HEADLESS PACKAGE</text>
+
+  <rect class="box" x="85" y="220" width="290" height="155" fill="#172554" stroke="#3b82f6"/>
+  <text x="230" y="260" text-anchor="middle" class="name">FastAPI Endpoint Layer</text>
+  <text x="230" y="285" text-anchor="middle" class="type">[API Components]</text>
+  <text x="230" y="320" text-anchor="middle" class="body">Compute, Dataset, Training,</text>
+  <text x="230" y="342" text-anchor="middle" class="body">Model, Inference, Health</text>
+
+  <rect class="box" x="455" y="220" width="290" height="155" fill="#1e293b" stroke="#64748b"/>
+  <text x="600" y="260" text-anchor="middle" class="name">Dependency Assembly</text>
+  <text x="600" y="285" text-anchor="middle" class="type">[FastAPI Configuration]</text>
+  <text x="600" y="320" text-anchor="middle" class="body">Builds service singletons and</text>
+  <text x="600" y="342" text-anchor="middle" class="body">injects package interfaces</text>
+
+  <rect class="box" x="825" y="220" width="290" height="155" fill="#3f1d2e" stroke="#fb7185"/>
+  <text x="970" y="260" text-anchor="middle" class="name">Exception Handlers</text>
+  <text x="970" y="285" text-anchor="middle" class="type">[API Error Mapping]</text>
+  <text x="970" y="320" text-anchor="middle" class="body">Maps domain, business, and</text>
+  <text x="970" y="342" text-anchor="middle" class="body">validation errors to HTTP responses</text>
+
+  <rect class="boundary" x="85" y="450" width="1350" height="625"/>
+  <text x="112" y="488" class="type">ADCUST_LOGIC PACKAGE</text>
+
+  <rect class="box" x="125" y="535" width="260" height="150" fill="#312e81" stroke="#818cf8"/>
+  <text x="255" y="575" text-anchor="middle" class="name">ComputeProviderService</text>
+  <text x="255" y="600" text-anchor="middle" class="type">[Infrastructure Service]</text>
+  <text x="255" y="635" text-anchor="middle" class="body">Persists compute profiles, creates</text>
+  <text x="255" y="657" text-anchor="middle" class="body">drivers, and verifies SSH reachability</text>
+
+  <rect class="box" x="435" y="535" width="260" height="150" fill="#312e81" stroke="#818cf8"/>
+  <text x="565" y="575" text-anchor="middle" class="name">DatasetService</text>
+  <text x="565" y="600" text-anchor="middle" class="type">[Client Service]</text>
+  <text x="565" y="635" text-anchor="middle" class="body">Registers datasets and delegates</text>
+  <text x="565" y="657" text-anchor="middle" class="body">PDF text and knowledge preparation</text>
+
+  <rect class="box" x="745" y="535" width="260" height="150" fill="#312e81" stroke="#818cf8"/>
+  <text x="875" y="575" text-anchor="middle" class="name">TrainingService</text>
+  <text x="875" y="600" text-anchor="middle" class="type">[Remote Workflow Service]</text>
+  <text x="875" y="635" text-anchor="middle" class="body">Owns the end-to-end job workflow,</text>
+  <text x="875" y="657" text-anchor="middle" class="body">events, download, abort, and cleanup</text>
+
+  <rect class="box" x="1055" y="535" width="260" height="150" fill="#312e81" stroke="#818cf8"/>
+  <text x="1185" y="575" text-anchor="middle" class="name">InferenceService</text>
+  <text x="1185" y="600" text-anchor="middle" class="type">[Client Service]</text>
+  <text x="1185" y="635" text-anchor="middle" class="body">Boots and shuts down the engine,</text>
+  <text x="1185" y="657" text-anchor="middle" class="body">mounts adapters, manages generation</text>
+
+  <rect class="box" x="125" y="760" width="260" height="155" fill="#12372a" stroke="#34d399"/>
+  <text x="255" y="800" text-anchor="middle" class="name">SSHComputeDriver</text>
+  <text x="255" y="825" text-anchor="middle" class="type">[Paramiko Adapter]</text>
+  <text x="255" y="860" text-anchor="middle" class="body">Connect, heartbeat, exec, SFTP,</text>
+  <text x="255" y="882" text-anchor="middle" class="body">log streaming, abort, disconnect</text>
+
+  <rect class="box" x="435" y="760" width="260" height="155" fill="#12372a" stroke="#34d399"/>
+  <text x="565" y="800" text-anchor="middle" class="name">Dataset Engines</text>
+  <text x="565" y="825" text-anchor="middle" class="type">[PDF + Knowledge Engines]</text>
+  <text x="565" y="860" text-anchor="middle" class="body">Extract clean text, split content,</text>
+  <text x="565" y="882" text-anchor="middle" class="body">and build temporary JSON records</text>
+
+  <rect class="box" x="745" y="760" width="260" height="155" fill="#12372a" stroke="#34d399"/>
+  <text x="875" y="800" text-anchor="middle" class="name">Remote Training Engine</text>
+  <text x="875" y="825" text-anchor="middle" class="type">[train_entry.py]</text>
+  <text x="875" y="860" text-anchor="middle" class="body">Model download and verification,</text>
+  <text x="875" y="882" text-anchor="middle" class="body">LoRA / QLoRA SFT, metrics, saving</text>
+
+  <rect class="box" x="1055" y="760" width="260" height="155" fill="#12372a" stroke="#34d399"/>
+  <text x="1185" y="800" text-anchor="middle" class="name">HuggingFaceEngine</text>
+  <text x="1185" y="825" text-anchor="middle" class="type">[Local Inference Engine]</text>
+  <text x="1185" y="860" text-anchor="middle" class="body">Transformers model, PEFT adapters,</text>
+  <text x="1185" y="882" text-anchor="middle" class="body">chat template, history, cancellation</text>
+
+  <rect class="box" x="435" y="960" width="260" height="80" fill="#3f2b12" stroke="#fbbf24"/>
+  <text x="565" y="993" text-anchor="middle" class="name">DTO Schemas</text>
+  <text x="565" y="1018" text-anchor="middle" class="type">[Pydantic Transport Models]</text>
+
+  <rect class="box" x="745" y="960" width="260" height="80" fill="#3f2b12" stroke="#fbbf24"/>
+  <text x="875" y="993" text-anchor="middle" class="name">Rich Domain Models</text>
+  <text x="875" y="1018" text-anchor="middle" class="type">[Jobs, Providers, Models, Datasets]</text>
+
+  <rect class="box" x="1055" y="960" width="260" height="80" fill="#3f2b12" stroke="#fbbf24"/>
+  <text x="1185" y="993" text-anchor="middle" class="name">Mappers + Exceptions</text>
+  <text x="1185" y="1018" text-anchor="middle" class="type">[Boundary and Error Components]</text>
+
+  <rect class="box" x="1500" y="220" width="300" height="155" fill="#172554" stroke="#3b82f6"/>
+  <text x="1650" y="260" text-anchor="middle" class="name">AdCust Desktop</text>
+  <text x="1650" y="285" text-anchor="middle" class="type">[Tauri + React]</text>
+  <text x="1650" y="320" text-anchor="middle" class="body">Calls HTTP endpoints and consumes</text>
+  <text x="1650" y="342" text-anchor="middle" class="body">workflow events, logs, and metrics</text>
+
+  <rect class="box" x="1500" y="535" width="300" height="180" fill="#3f1d2e" stroke="#fb7185"/>
+  <text x="1650" y="578" text-anchor="middle" class="name">RunPod GPU Server</text>
+  <text x="1650" y="603" text-anchor="middle" class="type">[External Linux + NVIDIA GPU]</text>
+  <text x="1650" y="638" text-anchor="middle" class="body">User starts and stops the pod.</text>
+  <text x="1650" y="660" text-anchor="middle" class="body">AdCust only uses SSH / SFTP and</text>
+  <text x="1650" y="682" text-anchor="middle" class="body">runs the uploaded training engine.</text>
+
+  <rect class="box" x="1500" y="790" width="300" height="150" fill="#12372a" stroke="#34d399"/>
+  <text x="1650" y="832" text-anchor="middle" class="name">Hugging Face Hub</text>
+  <text x="1650" y="857" text-anchor="middle" class="type">[External Model Registry]</text>
+  <text x="1650" y="892" text-anchor="middle" class="body">Exact repository revision used for</text>
+  <text x="1650" y="914" text-anchor="middle" class="body">remote base-model reconstruction</text>
+
+  <path class="arrow" d="M1500 195 H230 V210"/>
+  <text x="865" y="185" text-anchor="middle" class="rel">HTTP / JSON and streamed training events</text>
+
+  <path class="arrow" d="M375 297 H445"/>
+  <path class="arrow" d="M745 297 H815"/>
+
+  <path class="arrow" d="M600 385 C600 430 255 430 255 525"/>
+  <path class="arrow" d="M600 385 C600 445 565 445 565 525"/>
+  <path class="arrow" d="M600 385 C600 445 875 445 875 525"/>
+  <path class="arrow" d="M600 385 C600 430 1185 430 1185 525"/>
+
+  <path class="arrow" d="M255 685 V750"/>
+  <path class="arrow" d="M565 685 V750"/>
+  <path class="arrow" d="M875 685 V750"/>
+  <path class="arrow" d="M1185 685 V750"/>
+
+  <path class="arrow" d="M385 835 V1055 H1450 V625 H1490"/>
+  <text x="915" y="1050" text-anchor="middle" class="rel">SSH / SFTP: upload assets, stream logs and metrics, download adapter</text>
+
+  <path class="arrow" d="M1650 780 V725"/>
+  <text x="1665" y="760" class="rel">HTTPS download</text>
+
+  <path class="arrow" d="M875 950 V925"/>
+  <path class="arrow" d="M565 950 V925"/>
+  <path class="arrow" d="M1185 950 V925"/>
+
+  <text x="78" y="1112" class="subtitle">The remote provider is intentionally outside the package boundary. RunPod is the current example, while the driver contract remains provider-agnostic.</text>
+</svg>
