@@ -10,6 +10,8 @@ src-tauri/binaries/
 
 # IDEs and Tools
 .vscode/
+!.vscode/
+!.vscode/extensions.json
 .idea/
 *.suo
 *.ntvs*

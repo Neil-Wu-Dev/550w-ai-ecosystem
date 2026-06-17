@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 from fastapi import FastAPI
 
 # --- 1. 导入接口 (Interfaces) ---
@@ -23,7 +24,10 @@ logger = logging.getLogger(__name__)
 
 # 第一步：先创建不依赖他人的原子服务 (Atomic Services)
 # 为基础设施服务指定一个存储路径，用于持久化供应商 Key/配置
-_provider_storage_path = os.path.join(os.getcwd(), "data", "providers.json")
+# 持久化目录必须与当前工作目录无关，否则不同启动入口会读取不同的数据文件。
+_default_data_dir = Path(__file__).resolve().parents[1] / "data"
+_data_dir = Path(os.getenv("ADCUST_DATA_DIR", str(_default_data_dir))).expanduser().resolve()
+_provider_storage_path = str(_data_dir / "providers.json")
 _infra_service_instance = ComputeProviderService(storage_path=_provider_storage_path)
 
 _model_manager_instance = ModelManagerService()
@@ -76,6 +80,7 @@ def setup_dependencies(app: FastAPI) -> None:
     点火函数：确保所有 Service 单例已正确组装，并建立依赖链路。
     """
     logger.info("--- [Dependencies] 正在启动全局依赖检查 (跨云调度模式)... ---")
+    logger.info("[Dependencies] Persistent data directory: %s", _data_dir)
 
     # 检查所有单例是否实例化成功
     services = [

@@ -8,6 +8,9 @@
 **/env/
 **/ENV/
 **/conda/
+.env
+.env.*
+!.env.example
 bin/
 lib/
 include/
@@ -21,6 +24,9 @@ share/
 .pytest_cache/
 .coverage
 .mypy_cache/
+*.log
+*.tmp
+*.temp
 
 # 3. 屏蔽物理数据和模型资产。
 # 不允许使用 **/models/：adcust_logic/models 是必须提交的 Python 领域模型源码。
@@ -41,9 +47,10 @@ share/
 *.7z
 *.onnx
 
-# 4. 屏蔽 IDE 和系统产生的配置文件
-.idea/
-.vscode/
+# 4. 屏蔽仓库根目录的个人 IDE 配置；项目内已跟踪的运行配置不受影响。
+/.idea/
+/.vscode/
+/.run/
 *.swp
 *.bak
 .DS_Store
@@ -53,7 +60,10 @@ Thumbs.db
 node_modules/
 dist/
 build/
+.build/
 out/
+.pnpm-store/
+**/target/
 
 
 
@@ -62,3 +72,13 @@ out/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# 7. 本地 release 产物。正式二进制包不进 Git；应上传到 GitHub Releases。
+release/adcust/**/*.exe
+release/adcust/**/runtime/
+release/adcust/**/data/
+release/adcust/**/logs/
+release/adcust/**/release-manifest.json
+release/adcust/**/*.msi
+release/adcust/**/*.nsis.zip
+apps/adcust-launcher/target/
