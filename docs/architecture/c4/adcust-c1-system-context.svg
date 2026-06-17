@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .title { font: 700 34px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .subtitle { font: 400 16px Inter, Arial, sans-serif; fill: #94a3b8; }
+      .name { font: 700 22px Inter, Arial, sans-serif; fill: #f8fafc; }
+      .type { font: 600 14px Inter, Arial, sans-serif; fill: #93c5fd; }
+      .body { font: 400 15px Inter, Arial, sans-serif; fill: #cbd5e1; }
+      .rel { font: 600 14px Inter, Arial, sans-serif; fill: #dbeafe; }
+      .box { stroke-width: 2; rx: 8; }
+      .arrow { fill: none; stroke: #60a5fa; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="#09090b"/>
+  <rect x="36" y="34" width="1528" height="832" rx="14" fill="#111318" stroke="#27272a"/>
+  <text x="80" y="96" class="title">AdCust — C1 System Context</text>
+  <text x="80" y="128" class="subtitle">Provider-agnostic adapter training and local inference through a user-managed GPU server</text>
+
+  <g filter="url(#shadow)">
+    <rect class="box" x="90" y="315" width="290" height="210" fill="#1e293b" stroke="#64748b"/>
+    <circle cx="235" cy="365" r="28" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+    <path d="M205 433 Q235 392 265 433 V455 H205 Z" fill="#64748b"/>
+    <text x="235" y="486" text-anchor="middle" class="name">AdCust User</text>
+    <text x="235" y="512" text-anchor="middle" class="type">[Person]</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect class="box" x="565" y="255" width="470" height="330" fill="#172554" stroke="#3b82f6"/>
+    <text x="800" y="328" text-anchor="middle" class="name">AdCust</text>
+    <text x="800" y="357" text-anchor="middle" class="type">[Software System]</text>
+    <text x="800" y="405" text-anchor="middle" class="body">Configures remote GPU machines over SSH, prepares</text>
+    <text x="800" y="431" text-anchor="middle" class="body">datasets, runs LoRA / QLoRA training, streams logs,</text>
+    <text x="800" y="457" text-anchor="middle" class="body">downloads signed adapters, and tests them locally.</text>
+    <text x="800" y="505" text-anchor="middle" class="body">AdCust does not create, start, stop, or destroy</text>
+    <text x="800" y="531" text-anchor="middle" class="body">cloud servers and does not control provider billing.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect class="box" x="1220" y="180" width="290" height="210" fill="#3f1d2e" stroke="#fb7185"/>
+    <text x="1365" y="245" text-anchor="middle" class="name">RunPod GPU Server</text>
+    <text x="1365" y="275" text-anchor="middle" class="type">[External System]</text>
+    <text x="1365" y="318" text-anchor="middle" class="body">User-managed Linux pod</text>
+    <text x="1365" y="344" text-anchor="middle" class="body">with NVIDIA GPU and SSH</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect class="box" x="1220" y="530" width="290" height="190" fill="#12372a" stroke="#34d399"/>
+    <text x="1365" y="592" text-anchor="middle" class="name">Hugging Face Hub</text>
+    <text x="1365" y="622" text-anchor="middle" class="type">[External System]</text>
+    <text x="1365" y="665" text-anchor="middle" class="body">Provides the exact base-model</text>
+    <text x="1365" y="691" text-anchor="middle" class="body">repository revision to the server</text>
+  </g>
+
+  <path class="arrow" d="M380 420 H555"/>
+  <text x="468" y="397" text-anchor="middle" class="rel">Configures training, monitors jobs,</text>
+  <text x="468" y="417" text-anchor="middle" class="rel">and runs local inference</text>
+
+  <path class="arrow" d="M1035 355 C1105 355 1120 285 1210 285"/>
+  <text x="1118" y="250" text-anchor="middle" class="rel">SSH / SFTP</text>
+  <text x="1118" y="270" text-anchor="middle" class="rel">commands, files, logs</text>
+
+  <path class="arrow" d="M1210 628 C1110 628 1100 510 1035 510"/>
+  <text x="1122" y="578" text-anchor="middle" class="rel">Model identity and</text>
+  <text x="1122" y="598" text-anchor="middle" class="rel">revision metadata</text>
+
+  <path class="arrow" d="M1365 520 V400"/>
+  <text x="1380" y="466" class="rel">HTTPS model download</text>
+
+  <text x="80" y="825" class="subtitle">RunPod is shown as the current server provider. The SSH contract also supports any reachable Linux + NVIDIA GPU machine.</text>
+</svg>

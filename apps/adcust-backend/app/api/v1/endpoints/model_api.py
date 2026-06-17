@@ -1,6 +1,6 @@
 import logging
 from fastapi import APIRouter, Depends
-from adcust_logic.interfaces.services.i_model_manager import IModelManagerService
+from adcust_logic.interfaces.services.client.i_model_manager import IModelManagerService
 from app.config.dependencies import get_model_service
 from adcust_logic.schemas.model_schema import ModelSelectRequest, ModelResponse
 from adcust_logic.mappers.model_mapper import ModelMapper

@@ -1,0 +1,15 @@
+#!/bin/sh
+# 提交前检查暂存区，阻止单文件超过 10 MiB 或提交内容超过 50 MiB。
+
+repo_root="$(git rev-parse --show-toplevel)" || exit 1
+
+if command -v python >/dev/null 2>&1; then
+    exec python "$repo_root/scripts/git_size_guard.py" staged
+fi
+
+if command -v python3 >/dev/null 2>&1; then
+    exec python3 "$repo_root/scripts/git_size_guard.py" staged
+fi
+
+echo "[Git Size Guard] ERROR: Python 3 is required to validate the commit." >&2
+exit 2

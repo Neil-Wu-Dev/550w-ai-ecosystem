@@ -1,0 +1,151 @@
+name: AdCust Backend CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONUNBUFFERED: "1"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  build:
+    name: "1 - Build"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            apps/adcust-backend/requirements-ci.txt
+            packages/adcust-logic/pyproject.toml
+
+      - name: Install build tools
+        run: python -m pip install --upgrade pip build twine
+
+      - name: Compile backend and package sources
+        run: >-
+          python -m compileall -q
+          apps/adcust-backend/app
+          packages/adcust-logic/adcust_logic
+
+      - name: Build adcust_logic wheel and source distribution
+        run: >-
+          python -m build
+          packages/adcust-logic
+          --outdir dist
+
+      - name: Validate package metadata
+        run: python -m twine check dist/*
+
+      - name: Verify build contents
+        run: python scripts/ci/verify_backend_build.py dist
+
+      - name: Upload backend build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: adcust-backend-build
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  unit-tests:
+    name: "2 - Unit Tests"
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            apps/adcust-backend/requirements-ci.txt
+            packages/adcust-logic/pyproject.toml
+
+      - name: Download backend build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: adcust-backend-build
+          path: dist
+
+      - name: Install CI dependencies and built package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r apps/adcust-backend/requirements-ci.txt
+          python -m pip install dist/*.whl
+
+      - name: Verify installed package
+        run: >-
+          python -c "import adcust_logic, adcust_logic.models,
+          adcust_logic.models.infra.compute_provider_asset, importlib.resources;
+          assert importlib.resources.files('adcust_logic').joinpath('remote/train_entry.py').is_file();
+          print('Installed adcust_logic package: PASS')"
+
+      - name: Run unit tests
+        working-directory: apps/adcust-backend
+        run: python -m pytest tests/unit -v --color=yes
+
+  integration-tests:
+    name: "3 - Integration Tests"
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            apps/adcust-backend/requirements-ci.txt
+            packages/adcust-logic/pyproject.toml
+
+      - name: Download backend build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: adcust-backend-build
+          path: dist
+
+      - name: Install CI dependencies and built package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r apps/adcust-backend/requirements-ci.txt
+          python -m pip install dist/*.whl
+
+      - name: Verify installed package
+        run: >-
+          python -c "import adcust_logic, adcust_logic.models,
+          adcust_logic.models.infra.compute_provider_asset, importlib.resources;
+          assert importlib.resources.files('adcust_logic').joinpath('remote/train_entry.py').is_file();
+          print('Installed adcust_logic package: PASS')"
+
+      - name: Run integration tests
+        working-directory: apps/adcust-backend
+        run: python -m pytest tests/integration -v --color=yes

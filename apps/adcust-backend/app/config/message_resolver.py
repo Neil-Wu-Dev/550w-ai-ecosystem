@@ -1,13 +1,14 @@
 import json
 from pathlib import Path
 from typing import Any
+import adcust_logic
 from adcust_logic.exceptions.domain_exception import DomainException
 
 class MessageResolver:
     def __init__(self, locale: str = "zh_CN"):
-        # 自动定位到 adcust_logic/locales 文件夹
-        root_path = Path(__file__).resolve().parents[2]
-        self.bundle_path = root_path / "adcust_logic" / "locales" / f"{locale}.json"
+        # 自动定位到已安装或 editable 方式引入的 adcust_logic/locales。
+        root_path = Path(adcust_logic.__file__).resolve().parent
+        self.bundle_path = root_path / "locales" / f"{locale}.json"
         self._messages = self._load_messages()
 
     def _load_messages(self) -> dict:

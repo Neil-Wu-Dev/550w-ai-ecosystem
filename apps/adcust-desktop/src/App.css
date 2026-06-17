@@ -1,106 +1,220 @@
 @import "tailwindcss";
 
-/* --- 1. 定义赛博朋克主题变量 (Tailwind v4) --- */
 @theme {
-  --color-cyber-black: #020a04;
-  --color-surface-dark: #0a160e;
-  --color-surface-light: #131e15;
-  --color-neon-green: #39ff14;
-  --color-cyber-green: #00ff41;
+  /* 严格锁定背景与容器色值 */
+  --color-background: #131315;
+  --color-surface: #131315;
+  --color-surface-container-low: #1b1b1d;
+  --color-surface-container: #201f21;
+  --color-surface-container-high: #2a2a2c;
+  --color-surface-container-highest: #353437;
+  --color-surface-container-lowest: #0e0e10;
+  
+  /* 核心交互色：VS Code 蓝 */
+  --color-primary: #007acc;
+  --color-primary-container: #007acc;
+  
+  /* 功能状态色 */
+  --color-secondary: #61dac1; /* 终端绿 */
+  --color-error: #f14c4c;    /* 错误红 */
+  --color-warning: #cca700;  /* 警告黄 */
+  
+  /* 文字色 */
+  --color-on-surface: #e5e1e4;
+  --color-on-surface-variant: #c0c7d3;
+  --color-outline-variant: #404751;
+
+  /* IntelliJ / JetBrains 风格：正文使用 Inter，数据与控制台使用 JetBrains Mono */
+  --font-sans: 'Inter', 'JetBrains Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', 'Consolas', monospace;
 }
 
-/* --- 2. 全局基础样式 --- */
 @layer base {
   :root {
-    background-color: var(--color-cyber-black);
-    color: var(--color-cyber-green);
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
-    margin: 0;
-    padding: 0;
-    cursor: crosshair; /* 更有终端感 */
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    -webkit-font-smoothing: antialiased;
   }
   
   body {
-    @apply bg-cyber-black m-0 p-0 overflow-hidden;
+    @apply m-0 p-0 overflow-hidden h-screen font-sans;
   }
 
-  /* 霓虹文字闪烁感 */
-  .text-neon-green {
-    text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+  /* 核心：全全局强制直角 */
+  * {
+    border-radius: 0px !important;
+    letter-spacing: 0 !important;
   }
 
-  /* 移除输入框原生焦点框 */
-  input:focus {
-    outline: none;
-    box-shadow: none;
+  input, button, table, select {
+    font-family: var(--font-sans);
   }
-}
 
-/* --- 3. CRT 扫描线滤镜 (核心视觉) --- */
-.crt-overlay {
-  pointer-events: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
-              linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01));
-  z-index: 100;
-  background-size: 100% 3px, 3px 100%;
-  opacity: 0.3;
-}
-
-/* --- 4. 自定义滚动条 (隐形极简) --- */
-.custom-scrollbar::-webkit-scrollbar { 
-  width: 3px; 
-}
-.custom-scrollbar::-webkit-scrollbar-track { 
-  background: var(--color-cyber-black); 
-}
-.custom-scrollbar::-webkit-scrollbar-thumb { 
-  background: rgba(57, 255, 20, 0.1); 
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { 
-  background: var(--color-neon-green); 
-}
-
-/* --- 5. 核心动画：训练激活状态 --- */
-/* 这里使用了琥珀色/橙色，用来在全绿界面中突显“正在处理”的状态 */
-@keyframes pulse-training {
-  0% { 
-    border-color: rgba(245, 158, 11, 0.2); 
-    background-color: rgba(245, 158, 11, 0.05);
+  button, a, input, select {
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, box-shadow 120ms ease, filter 120ms ease;
   }
-  50% { 
-    border-color: rgba(245, 158, 11, 1); 
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
-    background-color: rgba(245, 158, 11, 0.1);
+
+  button {
+    color: inherit;
   }
-  100% { 
-    border-color: rgba(245, 158, 11, 0.2); 
-    background-color: rgba(245, 158, 11, 0.05);
+
+  button:not(:disabled):hover {
+    filter: brightness(1.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 1px rgba(0, 122, 204, 0.32);
+  }
+
+  button:not(:disabled):active {
+    filter: brightness(0.95);
+    transform: translateY(1px);
+  }
+
+  button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  input:focus, select:focus {
+    box-shadow: 0 0 0 1px rgba(0, 122, 204, 0.9), 0 0 0 4px rgba(0, 122, 204, 0.16);
   }
 }
 
-.training-active { 
-  animation: pulse-training 1.5s infinite ease-in-out; 
-  /* 分开写，把 !important 放在最后 */
-  color: #f59e0b !important; 
-  border-color: #d97706 !important;
-}
-/* --- 6. 辅助工具类 --- */
-.bg-surface-dark {
-  background-color: var(--color-surface-dark);
+/* 装饰性工具类 */
+.pixel-grid {
+  background-image: radial-gradient(circle, #404751 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.bg-surface-light {
-  background-color: var(--color-surface-light);
+.active-glow {
+  box-shadow: 0 0 12px 0px rgba(0, 122, 204, 0.25);
 }
 
-/* 简单的文字打字机装饰效果（可选） */
-.glitch-text {
-  position: relative;
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #404751; }
+
+.code-red { color: var(--color-error); }
+.code-yellow { color: var(--color-warning); }
+.code-green { color: var(--color-secondary); }
+
+.window-button {
+  width: 46px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #d1d5db;
+  transition: background-color 120ms ease, color 120ms ease;
 }
 
-/* 确保所有面板的边框都保持一致的透明度 */
-section, aside, header, footer {
-  border-color: rgba(0, 255, 65, 0.15);
+.window-button:hover {
+  background: rgba(0, 122, 204, 0.24);
+  color: #ffffff;
+}
+
+.window-button-danger:hover {
+  background: var(--color-error);
+  color: white;
+}
+
+.file-picker-button {
+  width: 100%;
+  min-height: 48px;
+  border: 1px dashed rgba(192, 199, 211, 0.42);
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.025);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.file-picker-button:hover {
+  border-color: var(--color-primary);
+  background: rgba(0, 122, 204, 0.12);
+  color: white;
+}
+
+.icon-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(192, 199, 211, 0.28);
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.035);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  border-color: var(--color-primary);
+  background: rgba(0, 122, 204, 0.18);
+  color: white;
+}
+
+.btn-primary {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background: #168fe3;
+  border-color: #4db2ff;
+  color: #ffffff;
+}
+
+.btn-tool {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(192, 199, 211, 0.28);
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.btn-tool:hover {
+  border-color: var(--color-primary);
+  background: rgba(0, 122, 204, 0.18);
+  color: white;
+}
+
+.btn-danger {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--color-error);
+  color: #ffffff;
+  background: rgba(241, 76, 76, 0.86);
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-danger:hover {
+  background: var(--color-error);
+  border-color: #ff8a8a;
+  color: white;
+}
+
+.primary-panel {
+  border: 1px solid rgba(192, 199, 211, 0.2);
+  background: rgba(27, 27, 29, 0.96);
 }
